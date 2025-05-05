@@ -13,7 +13,8 @@ class View(ft.UserControl):
         self._controller = None
         # graphical elements
         self._title = None
-
+        self._dd_stato=None
+        self._btn_stati=None
         self._txt_result = None
 
     def load_interface(self):
@@ -22,10 +23,14 @@ class View(ft.UserControl):
         self._page.controls.append(self._title)
 
         #ROW with controls
-        self._txtAnno = ft.TextField(label="Anno")
+        self._txtAnno = ft.TextField(label="Anno", on_change=self._controller.handle_change)
         self._btnCalcola = ft.ElevatedButton(text="Calcola Confini", on_click=self._controller.handleCalcola)
         row1 = ft.Row([self._txtAnno, self._btnCalcola], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
+        self._dd_stato=ft.Dropdown(label="Stato", disabled=True, options=self._controller.get_options())
+        self._btn_stati=ft.ElevatedButton(text="Stati Raggiungibili", disabled=True, on_click=self._controller.handleRaggiungibili)
+        row2 = ft.Row([self._dd_stato,self._btn_stati], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row2)
         # List View where the reply is printed
         self._txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=False)
         self._page.controls.append(self._txt_result)
